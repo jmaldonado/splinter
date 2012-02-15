@@ -1,11 +1,11 @@
 class Attachment < ActiveRecord::Base
 
-  attr_accessor :splints, :encrypt_attachment, :remove_old_records, :salt, :file_id
+  attr_accessor :attach, :encrypt_attachment, :remove_old_records, :salt, :file_id
 
-  attr_accessible :splints, :sender_name, :sender_email, :recip_name, :recip_email, :message
+  attr_accessible :attach, :sender_name, :sender_email, :recipient_name, :recipient_email, :message
 
   require 'open-uri'
-  has_attached_file :splints,
+  has_attached_file :attach,
     :path => "splints/:id/original/:basename.:extension",
     :storage => :s3,
     :bucket => 'storefrontlesbianism',
@@ -14,11 +14,11 @@ class Attachment < ActiveRecord::Base
 
   email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 
-  validates_attachment_presence :splints
+  validates_attachment_presence :attach
 
-  validates :splints_file_name, :presence => { :message => "You did not enter a file to upload" }
+  validates :attach_file_name, :presence => { :message => "You did not enter a file to upload" }
 
-  validates :recip_email,
+  validates :recipient_email,
     :presence => true, 
     :length => { :within => 5..50, :message => " - The recipient email address is too long/not long enough" },
     :format => { :with => email_regex, :message => " - The recipient email address is not correctly entered" }
@@ -28,7 +28,7 @@ class Attachment < ActiveRecord::Base
     :length => { :within => 5..50, :message => " - Your email address is too long/not long enough" },
     :format => { :with => email_regex, :message => " - Your email address is not correctly entered" }
 
-  validates :recip_name, :sender_name,
+  validates :recipient_name, :sender_name,
     :presence => true,
     :length => { :within => 1..70 }
 
@@ -43,7 +43,7 @@ class Attachment < ActiveRecord::Base
     def encrypt_attachment
       self.salt = make_salt if new_record?
       self.file_id = salt
-      # self.file_id = encrypt(splints_file_name)
+      # self.file_id = encrypt(attach_file_name)
     end
 
     def encrypt(string)
@@ -51,7 +51,7 @@ class Attachment < ActiveRecord::Base
     end
 
     def make_salt
-      secure_hash("#{Time.now.utc}--#{splints_file_name}")
+      secure_hash("#{Time.now.utc}--#{attach_file_name}")
     end
 
     def secure_hash(string)
