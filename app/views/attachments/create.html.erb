@@ -1,0 +1,3 @@
+<h1><%= @title %></h1>
+  <p>The file <b><%= @attachment.splints_file_name %></b> has been successfully uploaded. An email has been sent to <b><%= @attachment.recip_email %></b> with a hyperlink to download the file.</p>
+  <p>This file will remain on our servers until <%= @attachment.created_at.to_time.advance(:days => 3).strftime("%A, %B %d at %I:%M:%S %p") %>.</p>

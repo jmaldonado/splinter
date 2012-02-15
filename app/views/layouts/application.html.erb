@@ -1,14 +1,47 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Splinter</title>
-  <%= stylesheet_link_tag    "application" %>
+  <title>Splints | <%= @title %></title>
+  <link href='http://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+  <%= stylesheet_link_tag 'screen', :media => 'screen' %>
+  <%= stylesheet_link_tag 'print', :media => 'print' %>
+  <%= stylesheet_link_tag 'application' %>
+
   <%= javascript_include_tag "application" %>
+
   <%= csrf_meta_tags %>
+
 </head>
 <body>
-
-<%= yield %>
-
+  <div class="container">
+    <div class="header">
+      Splints
+    </div>
+    <div class="menu">
+      <div class="span-12 append-bottom">&nbsp;</div>
+      <div class="span-12 append-bottom last">
+        <nav>
+          <ul>
+            <li><%= link_to "Home", root_path %></li>
+            <li><%= link_to "About", about_path %></li>
+            <li><%= link_to "Send a File", add_path %></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+    <div class="main">
+      <div class="span-15 colborder">
+        <%= yield %>
+      </div>
+      <div class="span-8 last">
+        <h2 class="emphasis">How this works</h2>
+        <p>Simply put, you upload a file and then it sends an email to a recipient. They get a download link and 72 hours to get their file.</p>
+        <p>I know, right! I'm excited too!</p>
+      </div>
+    </div>
+    <div class="footer clear">
+      Copyright <%= Time.now.year %>, Splints Technologies
+    </div>
+  </div>
 </body>
 </html>

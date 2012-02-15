@@ -1,7 +1,18 @@
 Splinter::Application.routes.draw do
-  get "pages/home"
 
+  get "pages/home"
   get "pages/about"
+
+
+  resources :attachments
+
+  match '/about', :to => 'pages#about'
+
+  match '/attachments/show/:file_id' => 'attachments#show', :as => :show_file
+  match '/attachments/get/:file_id' => 'attachments#get', :as => :get_file
+  match '/add' => 'attachments#new'
+
+  root :to => 'pages#home'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

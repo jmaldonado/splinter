@@ -1,0 +1,45 @@
+<h1><%= @title %></h1>
+
+<% if @attachment.nil? %>
+The file you are trying to access does not exist on our system. Please try again later.
+<% else %>
+<table>
+  <tr>
+    <th>Info</th>
+    <th>Data</th>
+  </tr>
+  <tr>
+    <td><b>File Name</b></td>
+    <td><%= @attachment.splints_file_name %></td>
+  </tr>
+  <tr>
+    <td><b>File Type</b></td>
+    <td><%= @attachment.splints_content_type %></td>
+  </tr>
+  <tr>
+    <td><b>File Size</b></td>
+    <td><%= @attachment.splints_file_size / 1024 %> KB</td>
+  </tr>
+  <tr>
+    <td><b>Sent By</b></td>
+    <td><%= @attachment.sender_name %> &lt;<%= @attachment.sender_email %>&gt;</td>
+  </tr>
+  <tr>
+    <td><b>Sent To</b></td>
+    <td><%= @attachment.recip_name %> &lt;<%= @attachment.recip_email %>&gt;</td>
+  </tr>
+  <tr>
+    <td><b>Message</b></td>
+    <td><%= @attachment.message %></td>
+  </tr>
+  <tr>
+    <td><b>Attachment expires</b></td>
+    <td><%= @attachment.created_at.to_time.advance(:days => 3).strftime("%A, %B %d at %I:%M:%S %p") %></td>
+  </tr>
+  <tr>
+    <td><b>DOWNLOAD LINK</b></td>
+    <td><%= link_to "DOWNLOAD", get_file_path %></td>
+  </tr>
+</table>
+<% end %>
+
