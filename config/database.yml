@@ -13,6 +13,9 @@
 # gem 'pg'
 #
 
+# the fuzz nibblers
+# the snerve wurblers
+# and other such nonsense
  
 development:
   adapter: postgresql
