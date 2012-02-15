@@ -19,6 +19,8 @@ gem "paperclip", "~> 2.6.0"
 
 gem 'jquery-rails'
 
+gem "uuid", "~> 2.3.5"
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do

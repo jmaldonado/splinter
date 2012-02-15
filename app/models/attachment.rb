@@ -1,16 +1,16 @@
 class Attachment < ActiveRecord::Base
 
-  attr_accessor :attach, :encrypt_attachment, :remove_old_records, :salt, :file_id
-
-  attr_accessible :attach, :sender_name, :sender_email, :recipient_name, :recipient_email, :message
-
   require 'open-uri'
+
+  attr_accessor :attach, :remove_old_records, :file_id
+
+  attr_accessible :attach, :sender_name, :sender_email, :recipient_name, :recipient_email, :message, :attach_file_name
+
   has_attached_file :attach,
-    :path => "splints/:id/original/:basename.:extension",
     :storage => :s3,
-    :bucket => 'storefrontlesbianism',
     :s3_credentials => "#{Rails.root}/config/s3.yml",
-    :s3_permissions => 'public'
+    :s3_permissions => :public_read,
+    :path => "splinter/:id/original/:basename.:extension"
 
   email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 
@@ -32,31 +32,17 @@ class Attachment < ActiveRecord::Base
     :presence => true,
     :length => { :within => 1..70 }
 
-    def self.remove_old_records
-      Attachment.delete_all(["created_at < ?", 3.days.ago])
-    end
+  def self.remove_old_records
+    Attachment.delete_all(["created_at < ?", 3.days.ago])
+  end
 
-  before_save :encrypt_attachment
+  before_create :generate_hidden_stuff
 
-  private
+  def generate_hidden_stuff
+    self.file_id = Digest::SHA2.hexdigest(attach_file_name)
+  end
 
-    def encrypt_attachment
-      self.salt = make_salt if new_record?
-      self.file_id = salt
-      # self.file_id = encrypt(attach_file_name)
-    end
 
-    def encrypt(string)
-      secure_hash("#{salt}--#{string}")
-    end
-
-    def make_salt
-      secure_hash("#{Time.now.utc}--#{attach_file_name}")
-    end
-
-    def secure_hash(string)
-      Digest::SHA2.hexdigest(string)
-    end
 end
 
 

@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+    <h1>You have a file waiting!</h1>
+    <p>You have been sent a link to download the file <b><%= @attachment.attach_file_name %></b> by <b><%= @attachment.sender_name %> &lt;<%= @attachment.sender_email %>&gt;</b>.</p>
+    <p><b>The sender says:</b> <%= @attachment.message %></p>
+    <p><%= link_to "Follow this link to get more information about this file and download it.", show_file_url(@attachment.file_id) %></p>
+    <p>You have 72 hours to download this file (<%= @attachment.created_at.to_time.advance(:days => 3).strftime("%A, %B %d at %I:%M:%S %p") %>). If you do not recognize the sender, please ignore this email.</p>
+  </body>
+</html>
