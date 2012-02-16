@@ -28,7 +28,6 @@ class AttachmentsController < ApplicationController
   def get
     download = Attachment.find_by_file_id(params[:file_id])
     if download
-      # redirect_to download.splints.url, :type => download.splints_content_type
       data = open(download.attach.url).read
       send_data data, :filename => download.attach_file_name
     else

@@ -2,9 +2,9 @@ class Attachment < ActiveRecord::Base
 
   require 'open-uri'
 
-  attr_accessor :attach, :remove_old_records, :file_id
+  attr_accessor :attach, :remove_old_records
 
-  attr_accessible :attach, :sender_name, :sender_email, :recipient_name, :recipient_email, :message, :attach_file_name
+  attr_accessible :attach, :sender_name, :sender_email, :recipient_name, :recipient_email, :message, :attach_file_name, :file_id
 
   has_attached_file :attach,
     :storage => :s3,
