@@ -4,7 +4,7 @@ class PagesController < ApplicationController
   end
 
   def about
-    @title = "About Splints"
+    @title = "About Splinter"
   end
 
 end
