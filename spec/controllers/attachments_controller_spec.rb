@@ -25,8 +25,7 @@ describe AttachmentsController do
            :attach_file_name => "4573593350_6d658c6056_b.jpg",
            :attach_content_type => "image/jpeg",
            :message => "Oh hello",
-           :salt => Digest::SHA2.hexdigest("Crap"),
-           :file_id => Digest::SHA2.hexdigest("More crap")
+           :file_id => Digest::SHA2.hexdigest("Stuff.")
       }
       end
 

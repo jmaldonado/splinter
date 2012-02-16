@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120215203637) do
+ActiveRecord::Schema.define(:version => 20120215235613) do
 
   create_table "attachments", :force => true do |t|
     t.string   "sender_name"
@@ -25,7 +25,6 @@ ActiveRecord::Schema.define(:version => 20120215203637) do
     t.integer  "attach_file_size"
     t.string   "attach_file_name"
     t.datetime "attach_updated_at"
-    t.string   "salt"
   end
 
 end
